@@ -14,8 +14,6 @@ const Character = () => {
     try {
       const res = await axios.get(`https://api.disneyapi.dev/character/${id}`);
       setCharacter(res.data);
-      console.log({ _id });
-      console.log('Character data:', res.data);
     } catch (error) {
       console.error('Error fetching character data:', error);
     }
@@ -36,6 +34,10 @@ const Character = () => {
     navigate(`/allcha/${nextId}`);
   };
 
+  const goToHome = () => {
+    navigate('/');
+  }
+
   if (!character) {
     return <div>Loading...</div>;
   }
@@ -45,6 +47,7 @@ const Character = () => {
       <div className='container d-flex justify-content-center align-items-center row mt-3'>
         <div className='d-flex justify-content-between align-items-center mb-3' style={{ width: '700px' }}>
           <button className='btn border text-white' onClick={goToPreviousCharacter}>Previous</button>
+          <button className='btn border text-white' onClick={goToHome}>Home</button>
           <button className='btn border text-white' onClick={goToNextCharacter}>Next</button>
         </div>
         <div className='border d-flex shadow bg-light rounded rows' style={{ width: '700px', height: 'auto' }} alt="card">
@@ -109,13 +112,13 @@ const Character = () => {
             </div>
             <br />
             <div>
-  <strong>Source :</strong>
-  <div className="source-url">
-    {character.data.sourceUrl && character.data.sourceUrl.length > 0
-      ? character.data.sourceUrl
-      : "None"}
-  </div>
-</div>
+              <strong>Source :</strong>
+              <div className="source-url">
+                {character.data.sourceUrl && character.data.sourceUrl.length > 0
+                  ? character.data.sourceUrl
+                  : "None"}
+              </div>
+            </div>
           </div>
         </div>
       </div>

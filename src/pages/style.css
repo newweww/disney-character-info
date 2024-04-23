@@ -1,9 +1,31 @@
 body {
     background: linear-gradient(90deg, #2bbcfa 0%, #e310b9 100%);
 }
+
 .source-url {
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-all;
   }
-  
+
+.result-list {
+    width: 500px;
+    background-color: white;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    box-shadow: 0px 0px 0px #ddd;
+    border-radius: 10px;
+    margin-top: 1rem;
+    max-height: 200px;
+    overflow-y: scroll;
+    z-index: 1;
+}
+
+.search-result {
+    padding: 10px 20px;
+}
+
+.search-result:hover {
+    background-color: #efefef;
+}
