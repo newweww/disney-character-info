@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import axios from 'axios';
 import './style.css';
 
 const Character = () => {
   const [character, setCharacter] = useState(null);
   const { _id } = useParams();
+  const navigate = useNavigate();
 
-  console.log('_id:', _id); 
+  console.log('_id:', _id);
 
-  const getCharacter = async () => {
+  const getCharacter = async (id) => {
     try {
-      const res = await axios.get(`https://api.disneyapi.dev/character/${_id}`);
+      const res = await axios.get(`https://api.disneyapi.dev/character/${id}`);
       setCharacter(res.data);
-      console.log({_id});
+      console.log({ _id });
       console.log('Character data:', res.data);
     } catch (error) {
       console.error('Error fetching character data:', error);
@@ -21,19 +22,33 @@ const Character = () => {
   };
 
   useEffect(() => {
-    getCharacter();
+    getCharacter(_id);
   }, [_id]);
+
+
+  const goToPreviousCharacter = () => {
+    const previousId = parseInt(_id, 10) - 1;
+    navigate(`/allcha/${previousId}`);
+  };
+
+  const goToNextCharacter = () => {
+    const nextId = parseInt(_id, 10) + 1;
+    navigate(`/allcha/${nextId}`);
+  };
 
   if (!character) {
     return <div>Loading...</div>;
   }
 
-
   return (
-    <div className='container'>
-      <div className='d-flex justify-content-center align-items-center'>
-        <div className='border d-flex shadow bg-light rounded rows' style={{ width: '700px', height: 'auto', marginTop: '40px' }} alt="card">
-          <div className='p-4 jutify-content-center align-items-center' style={{ width: '300px', height: '100%' }}>
+    <div className='d-flex justify-content-center align-items-center'>
+      <div className='container d-flex justify-content-center align-items-center row mt-3'>
+        <div className='d-flex justify-content-between align-items-center mb-3' style={{ width: '700px' }}>
+          <button className='btn border text-white' onClick={goToPreviousCharacter}>Previous</button>
+          <button className='btn border text-white' onClick={goToNextCharacter}>Next</button>
+        </div>
+        <div className='border d-flex shadow bg-light rounded rows' style={{ width: '700px', height: 'auto' }} alt="card">
+          <div className='p-4 justify-content-center align-items-center' style={{ width: '300px', height: '100%' }}>
             <img
               className='card-img-top'
               src={character.data.imageUrl}
@@ -42,7 +57,7 @@ const Character = () => {
               height="100%"
             />
           </div>
-          <div className='p-4 jutify-content-start align-items-start flex-column' style={{ width: '400px' }}>
+          <div className='p-4 justify-content-start align-items-start flex-column' style={{ width: '400px' }}>
             <h1>
               {character.data.name}
               <span style={{ fontSize: '20px' }}> #{character.data._id}</span>
@@ -92,6 +107,15 @@ const Character = () => {
                   : "None"
               }
             </div>
+            <br />
+            <div>
+  <strong>Source :</strong>
+  <div className="source-url">
+    {character.data.sourceUrl && character.data.sourceUrl.length > 0
+      ? character.data.sourceUrl
+      : "None"}
+  </div>
+</div>
           </div>
         </div>
       </div>
