@@ -4,6 +4,8 @@
 
 I created this website for my practice to improve my coding skills.
 
+**Deploy**: https://disneyinfo-848d7.web.app/
+
 ## Feature
 * **Searching**: You can search for any Disney character you want to know that appears in any movie, TV series, etc.
 
